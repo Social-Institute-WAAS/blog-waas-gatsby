@@ -10,3 +10,7 @@ Ativar o docker-compose do Wordpress
 
 Desativar o docker-compose do Wordpress
 `docker-compose down`
+
+## **Atenção**
+
+#### É preciso haver conteúdos publicados, com tags e categorias, senão irá gerar erros
