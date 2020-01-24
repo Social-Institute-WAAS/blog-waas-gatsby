@@ -1,0 +1,25 @@
+// 20200123231004
+// https://raw.githubusercontent.com/GatsbyCentral/gatsby-starter-wordpress/master/.eslintrc.json
+
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["react", "jsx-a11y", "import"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/prefer-stateless-function": "off",
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "react/no-danger": "off"
+  },
+  "settings": {
+    "import/core-modules": []
+  },
+  "env": {
+    "browser": true
+  }
+}
