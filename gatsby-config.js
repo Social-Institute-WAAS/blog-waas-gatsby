@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Blog do WAAS`,
@@ -38,8 +42,8 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // your WordPress source
-        baseUrl: `localhost`,
-        protocol: `http`,
+        baseUrl: process.env.URL_HOST,
+        protocol: process.env.URL_PROTOCOL,
         // is it hosted on wordpress.com, or self-hosted?
         hostingWPCOM: false,
         // does your site use the Advanced Custom Fields Plugin?
@@ -62,10 +66,10 @@ module.exports = {
         // It can help you debug specific API Endpoints problems.
         verboseOutput: false,
         // Search and Replace Urls across WordPress content.
-        searchAndReplaceContentUrls: {
-          sourceUrl: 'http://localhost',
-          replacementUrl: 'https://127.0.0.1',
-        },
+        // searchAndReplaceContentUrls: {
+        //   sourceUrl: 'http://localhost',
+        //   replacementUrl: 'https://127.0.0.1',
+        // },
         // Set how many simultaneous requests are sent at once.
         concurrentRequests: 10,
         // Set WP REST API routes whitelists

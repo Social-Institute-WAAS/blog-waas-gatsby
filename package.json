@@ -6,6 +6,7 @@
   "author": "Adao Lima <hi@adaolima.com>",
   "dependencies": {
     "bulma": "^0.8.0",
+    "dotenv": "^8.2.0",
     "gatsby": "^2.18.12",
     "gatsby-awesome-pagination": "^0.3.5",
     "gatsby-image": "^2.2.34",
@@ -48,8 +49,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
+    "build": "NODE_ENV=production gatsby build",
+    "develop": "NODE_ENV=development gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
