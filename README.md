@@ -14,3 +14,4 @@ Desativar o docker-compose do Wordpress
 ## **Atenção**
 
 #### É preciso haver conteúdos publicados, com tags e categorias, senão irá gerar erros
+
