@@ -1,9 +1,9 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { graphql } from "gatsby"
-import Layout from "../components/layout"
-import PostList from "../components/postList"
-import Pagination from "../components/pagination"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { graphql } from 'gatsby'
+import Layout from '../layouts'
+import PostList from '../components/PostList'
+import Pagination from '../components/pagination'
 
 export default class IndexPage extends React.Component {
   render() {
@@ -12,7 +12,7 @@ export default class IndexPage extends React.Component {
 
     return (
       <Layout>
-        <PostList posts={posts} title="Latest posts" />
+        <PostList posts={posts} pageContext={pageContext} />
         <Pagination pageContext={pageContext} pathPrefix="/" />
       </Layout>
     )
@@ -40,7 +40,33 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          ...PostListFields
+          author {
+            name
+            slug
+            avatar_urls {
+              wordpress_48
+            }
+          }
+          title
+          excerpt
+          slug
+          date(formatString: "MMM DD, YYYY")
+          categories {
+            slug
+            path
+          }
+          acf {
+            color_card
+          }
+          featured_media {
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 500, maxHeight: 500) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+          }
         }
       }
     }

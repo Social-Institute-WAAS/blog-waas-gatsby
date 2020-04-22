@@ -1,31 +1,37 @@
-version: "2"
+version: "3.3"
 services:
-  mariadb:
-    image: "bitnami/mariadb:latest"
-    volumes:
-      - "mariadb_data:/bitnami"
-    environment:
-      - MARIADB_USER=blog_user
-      - MARIADB_DATABASE=blog_waas
-      - ALLOW_EMPTY_PASSWORD=yes
   wordpress:
-    image: "bitnami/wordpress:latest"
+    build: .
+    restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - 9080:80
     volumes:
-      - "wordpress_data:/bitnami"
+      - ./wordpress_data/:/var/www/html
     depends_on:
-      - mariadb
+      - db
     environment:
-      - MARIADB_HOST=mariadb
-      - MARIADB_PORT_NUMBER=3306
-      - WORDPRESS_BLOG_NAME=Blog WAAS
-      - WORDPRESS_USERNAME=waas_user
-      - WORDPRESS_PASSWORD=waas123
-      - ALLOW_EMPTY_PASSWORD=yes
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: waas_user
+      WORDPRESS_DB_PASSWORD: waas123
+      WORDPRESS_DB_NAME: blog_waas
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: blog_waas
+      MYSQL_USER: waas_user
+      MYSQL_PASSWORD: waas123
+  adminer:
+    depends_on:
+      - db
+    image: adminer
+    restart: always
+    ports: 
+      - 8888:8080
+    
 volumes:
-  mariadb_data:
-    driver: local
-  wordpress_data:
-    driver: local
+  db_data: {}
+

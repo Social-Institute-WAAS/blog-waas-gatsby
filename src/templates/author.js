@@ -1,16 +1,17 @@
-import React from "react"
-import Helmet from "react-helmet"
-import { graphql } from "gatsby"
-import Layout from "../components/layout"
-import PostList from "../components/postList"
+import React from 'react'
+import Helmet from 'react-helmet'
+import { graphql } from 'gatsby'
+import Layout from '../layouts'
+import PostList from '../components/PostList'
+import Pagination from '../components/pagination'
 
 const Author = props => {
-  const { data } = props
+  const { data, pageContext } = props
   const { authored_wordpress__POST, name } = data.wordpressWpUsers
   const totalCount =
     (authored_wordpress__POST && authored_wordpress__POST.length) || 0
   const { title: siteTitle } = data.site.siteMetadata
-  const title = `${totalCount} post${totalCount === 1 ? "" : "s"} by ${name}`
+  const title = `${totalCount} post${totalCount === 1 ? '' : 's'} by ${name}`
 
   // The `authored_wordpress__POST` returns a simple array instead of an array
   // of edges / nodes. We therefore need to convert the array here.
@@ -21,7 +22,8 @@ const Author = props => {
   return (
     <Layout>
       <Helmet title={`${name} | ${siteTitle}`} />
-      <PostList posts={posts} title={title} />
+      <PostList posts={posts} pageContext={pageContext} />
+      <Pagination pageContext={pageContext} pathPrefix="/" />
     </Layout>
   )
 }

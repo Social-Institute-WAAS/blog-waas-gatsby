@@ -1,29 +1,71 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'gatsby'
 
-const Pagination = ({ pageContext, pathPrefix }) => {
-  const { previousPagePath, nextPagePath } = pageContext
+const Pagination = ({ pageContext }) => {
+  const {
+    previousPagePath,
+    nextPagePath,
+    numberOfPages,
+    humanPageNumber,
+  } = pageContext
+
+  const items = []
+  for (let i = 0; i < numberOfPages; i++) {
+    items.push(i + 1)
+  }
 
   return (
-    <nav className="pagination" role="navigation">
-      <div className="navbar navbar-menu">
+    <nav className="container d-flex" role="navigation">
+      <ul className="pagination pagination-lg mx-auto">
         {previousPagePath && (
-          <div className="navbar-item">
-            <Link to={previousPagePath} rel="prev">
-              Previous
+          <li className="page-item">
+            <Link
+              to={previousPagePath}
+              rel="prev"
+              className="page-link"
+              ariaLabel="Anterior"
+            >
+              <span ariaHidden="true">&laquo;</span>
+              <span className="sr-only">Anterior</span>
             </Link>
-          </div>
+          </li>
         )}
+        {items.map((val, index) => (
+          <li
+            key={index}
+            className={`page-item ${val == humanPageNumber ? `active` : ``}`}
+          >
+            <Link
+              to={val == 1 ? `/` : `/page/${val}`}
+              className="page-link"
+              activeClassName="active"
+            >
+              {val}
+            </Link>
+          </li>
+        ))}
         {nextPagePath && (
-          <div className="navbar-item">
-            <Link to={nextPagePath} rel="next">
-              Next
+          <li className="page-item">
+            <Link
+              to={nextPagePath}
+              rel="next"
+              className="page-link"
+              ariaLabel="Próximo"
+            >
+              <span ariaHidden="true">&raquo;</span>
+              <span className="sr-only">Próximo</span>
             </Link>
-          </div>
+          </li>
         )}
-      </div>
+      </ul>
+      {/* {humanPageNumber} */}
     </nav>
   )
+}
+
+Pagination.propTypes = {
+  pageContext: PropTypes.object.isRequired,
 }
 
 export default Pagination

@@ -1,8 +1,8 @@
-import React from "react"
-import Helmet from "react-helmet"
-import { graphql } from "gatsby"
-import Layout from "../components/layout"
-import PostList from "../components/postList"
+import React from 'react'
+import Helmet from 'react-helmet'
+import { graphql } from 'gatsby'
+import Layout from '../layouts'
+import PostList from '../components/PostList'
 
 const Tag = props => {
   const { data, pageContext } = props
@@ -10,7 +10,7 @@ const Tag = props => {
   const { title: siteTitle } = data.site.siteMetadata
   const { name: tag } = pageContext
   const title = `${totalCount} post${
-    totalCount === 1 ? "" : "s"
+    totalCount === 1 ? '' : 's'
   } with the tag ${tag}`
 
   return (

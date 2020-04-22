@@ -1,58 +1,50 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import { Link } from "gatsby"
-
-import { rhythm, scale } from "../utils/typography"
-
-const containerStyle = {
-  maxWidth: 700,
-  margin: `0 auto`,
-  padding: rhythm(3 / 4),
-}
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+//import { Link } from 'gatsby'
+import Header from '../components/Header'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import '../components/main.css'
+import '../fonts/fonts.css'
+// import { rhythm, scale } from '../utils/typography'
 
 class DefaultLayout extends Component {
+  constructor() {
+    super()
+    this.state = {
+      className: '',
+    }
+  }
+
+  // componentWillMount() {
+  //   window.onload = () => this.handleScroll();
+  // }
+
+  handleScroll() {
+    const navBar = document.getElementById('navbar');
+    if (document.documentElement.scrollTop > navBar?.offsetHeight) {
+      this.setState({
+        className: 'with-background',
+      })
+    } else {
+      this.setState({
+        className: '',
+      })
+    }
+  }
+ 
+
+  componentDidMount() {
+    window.onscroll = () => this.handleScroll();
+  }
+
   render() {
     return (
-      <div>
-        <div
-          css={{
-            background: `rgb(207, 58, 62)`,
-            marginBottom: rhythm(1),
-            padding: `${rhythm(1)} 0px`,
-            "@media screen and (min-width: 500px)": {
-              padding: `${rhythm(2)} 0px`,
-            },
-          }}
-        >
-          <div css={containerStyle}>
-            <h1
-              css={{
-                margin: 0,
-                fontSize: scale(1.5).fontSize,
-                lineHeight: 1,
-                "@media screen and (min-width: 500px)": {
-                  fontSize: scale(1.9).fontSize,
-                  lineHeight: 1,
-                },
-              }}
-            >
-              <Link
-                css={{
-                  color: `rgb(224,203,144)`,
-                  ":hover": {
-                    color: `rgb(224,203,144)`,
-                    textDecoration: `none`,
-                  },
-                }}
-                to="/"
-              >
-                Gatsby + WordPress!!
-              </Link>
-            </h1>
-          </div>
-        </div>
-        <div css={containerStyle}>{this.props.children}</div>
-      </div>
+      <>
+        <Navbar haveBg={this.state.className} />
+        <main className="container-fluid">{this.props.children}</main>
+        <Footer />
+      </>
     )
   }
 }

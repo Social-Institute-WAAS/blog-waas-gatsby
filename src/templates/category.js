@@ -1,8 +1,9 @@
-import React from "react"
-import Helmet from "react-helmet"
-import { graphql } from "gatsby"
-import Layout from "../components/layout"
-import PostList from "../components/postList"
+import React from 'react'
+import Helmet from 'react-helmet'
+import { graphql } from 'gatsby'
+import Layout from '../layouts'
+import PostList from '../components/PostList'
+import Pagination from '../components/pagination'
 
 const Category = props => {
   const { data, pageContext } = props
@@ -10,13 +11,14 @@ const Category = props => {
   const { title: siteTitle } = data.site.siteMetadata
   const { name: category } = pageContext
   const title = `${totalCount} post${
-    totalCount === 1 ? "" : "s"
+    totalCount === 1 ? '' : 's'
   } in the “${category}” category`
 
   return (
     <Layout>
       <Helmet title={`${category} | ${siteTitle}`} />
       <PostList posts={posts} title={title} />
+      <Pagination pageContext={pageContext} pathPrefix="/" />
     </Layout>
   )
 }
@@ -30,9 +32,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allWordpressPost(
-      filter: { categories: { elemMatch: { slug: { eq: $slug } } } }
-    ) {
+    allWordpressPost(filter: { categories: { elemMatch: { slug: { eq: $slug } } } }) {
       totalCount
       edges {
         node {

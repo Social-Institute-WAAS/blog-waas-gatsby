@@ -1,8 +1,8 @@
-import { graphql } from "gatsby"
-import React from "react"
-import { FaRegClock, FaTag, FaFolderOpen } from "react-icons/fa"
+import { graphql } from 'gatsby'
+import React from 'react'
+import { FaRegClock, FaTag, FaFolderOpen } from 'react-icons/fa'
 
-import { rhythm } from "../utils/typography"
+import { rhythm } from '../utils/typography'
 
 export default ({ node, className = `` }) => (
   <div css={{ marginTop: rhythm(-1 / 2) }} className={className}>

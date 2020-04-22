@@ -1,10 +1,10 @@
-const _ = require("lodash")
-const path = require("path")
-const { createFilePath } = require("gatsby-source-filesystem")
-const { paginate } = require("gatsby-awesome-pagination")
+const _ = require('lodash')
+const path = require('path')
+const { createFilePath } = require('gatsby-source-filesystem')
+const { paginate } = require('gatsby-awesome-pagination')
 
 const getOnlyPublished = edges =>
-  _.filter(edges, ({ node }) => node.status === "publish")
+  _.filter(edges, ({ node }) => node.status === 'publish')
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -36,7 +36,7 @@ exports.createPages = ({ actions, graphql }) => {
 
       const allPages = result.data.allWordpressPage.edges
       const pages =
-        process.env.NODE_ENV === "production"
+        process.env.NODE_ENV === 'production'
           ? getOnlyPublished(allPages)
           : allPages
 
@@ -78,7 +78,7 @@ exports.createPages = ({ actions, graphql }) => {
       // In production builds, filter for only published posts.
       const allPosts = result.data.allWordpressPost.edges
       const posts =
-        process.env.NODE_ENV === "production"
+        process.env.NODE_ENV === 'production'
           ? getOnlyPublished(allPosts)
           : allPosts
 
@@ -88,7 +88,9 @@ exports.createPages = ({ actions, graphql }) => {
         createPage({
           path: `/${post.slug}/`,
           component: postTemplate,
+
           context: {
+            limit: 3,
             id: post.id,
           },
         })
@@ -103,6 +105,7 @@ exports.createPages = ({ actions, graphql }) => {
         component: blogTemplate,
       })
     })
+    
     .then(() => {
       return graphql(`
         {
@@ -129,7 +132,7 @@ exports.createPages = ({ actions, graphql }) => {
       // Create a Gatsby page for each WordPress Category
       _.each(result.data.allWordpressCategory.edges, ({ node: cat }) => {
         createPage({
-          path: `/categories/${cat.slug}/`,
+          path: `/category/${cat.slug}/`,
           component: categoriesTemplate,
           context: {
             name: cat.name,
@@ -138,6 +141,7 @@ exports.createPages = ({ actions, graphql }) => {
         })
       })
     })
+
     .then(() => {
       return graphql(`
         {
@@ -174,6 +178,8 @@ exports.createPages = ({ actions, graphql }) => {
         })
       })
     })
+
+
     .then(() => {
       return graphql(`
         {
@@ -188,6 +194,7 @@ exports.createPages = ({ actions, graphql }) => {
         }
       `)
     })
+
     .then(result => {
       if (result.errors) {
         result.errors.forEach(e => console.error(e.toString()))

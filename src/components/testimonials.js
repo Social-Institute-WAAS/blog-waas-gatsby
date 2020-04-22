@@ -1,6 +1,6 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { v4 } from "uuid"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { v4 } from 'uuid'
 
 const Testimonials = ({ testimonials }) => (
   <div>
